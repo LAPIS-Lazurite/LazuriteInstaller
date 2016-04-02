@@ -1,20 +1,26 @@
-#! /bin/sh
+#! /bin/bash
 
-echo '******************************************************'
-echo '***** Installing LazuriteGraph for Raspberry Pi ******'
-echo '******************************************************'
+echo '*********************************************************'
+echo '**** Install/Update LazuriteGraph for Raspberry Pi ******'
+echo '*********************************************************'
 echo ''
 echo ''
-echo 'STEP1:: get LazDriver from github'
-
+echo 'STEP1:: get or update LazDriver from github'
 cd ~/driver
-git clone git://github.com/LAPIS-Lazurite/LazDriver
-cd LazDriver
-
+if [ -e 'LazDriver' ]; then
+	echo 'update LazDriver'
+	cd LazDriver
+	git pull
+else
+	echo 'downloading LazDriver'
+	git clone git://github.com/LAPIS-Lazurite/LazDriver
+	cd LazDriver
+fi
 echo ''
 echo ''
 echo 'STEP2:: build LazDriver'
 make
+
 echo ''
 echo ''
 echo 'STEP3:: installing rxtx serial library'
@@ -22,13 +28,20 @@ sudo apt-get install librxtx-java
 
 echo ''
 echo ''
-echo 'STEP4:: get LazuriteJava'
+echo 'STEP4:: get or update LazDriver from LazuriteJava'
 cd ~
-mkdir java
-
+if [ ! -e 'java' ]; then
+	mkdir java
+fi
 cd java
-git clone git://github.com/LAPIS-Lazurite/LazuriteJava
-cd LazuriteJava
+if [ -e 'LazuriteJava' ]; then
+	cd LazuriteJava
+	git pull
+else
+	git clone git://github.com/LAPIS-Lazurite/LazuriteJava
+	cd LazuriteJava
+fi
+
 echo ''
 echo ''
 echo 'STEP5:: build LazuriteJava'
@@ -41,8 +54,13 @@ echo ''
 echo ''
 echo 'STEP7:: get LazuriteGraph'
 cd ~/java
-git clone git://github.com/LAPIS-Lazurite/LazuriteGraph
-cd LazuriteGraph
+if [ -e 'LazuriteGraph' ]; then
+	cd LazuriteGraph
+	git pull
+else
+	git clone git://github.com/LAPIS-Lazurite/LazuriteGraph
+	cd LazuriteGraph
+fi
 echo ''
 echo ''
 echo 'STEP8:: install external library'
@@ -57,4 +75,7 @@ cp lib/linux/graph.pref .
 echo ''
 echo ''
 echo 'Complete !!'
+echo ''
+
+
 
