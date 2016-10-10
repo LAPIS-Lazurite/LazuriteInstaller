@@ -1,21 +1,14 @@
 #! /bin/bash
-HOME=$(pwd)
+WORK=$(pwd)
 echo '######################################################################'
 echo '#      Install and update Lazurite Libraries                         #'
 echo '######################################################################'
-echo 'STEP0: Update LazDriver(Linux Kernel driver for Lazurite)'
+echo 'STEP1: Update LazDriver(Linux Kernel driver for Lazurite)'
 cd ~
-if [ -e 'linux' ]; then
-	git pull origin master
-else
-	git clone git://github.com/raspberrypi/linux
+if [ ! -e 'driver' ]; then
+	mkdir driver
 fi
 
-cp ${HOME}/rpi/bcm* /home/pi/linux/arch/arm/boot/dts/
-
-echo ''
-echo ''
-echo 'STEP1: Update LazDriver(Linux Kernel driver for Lazurite)'
 cd ~/driver
 if [ -e 'LazDriver' ]; then
 	echo 'update LazDriver'
@@ -36,13 +29,14 @@ if [ -e 'liblzaurite' ]; then
 	echo 'update liblazurite'
 	cd liblazurite
 	git pull
-	make
 else
 	echo 'Cannot find liblzaurite. Download from github'
 	git clone git://github.com/LAPIS-Lazurite/liblazurite
 	cd liblazurite
-	make
 fi
+rm lib/drv-lazurite.h
+ln -s /home/pi/driver/LazDriver/drv-lazurite.h lib/drv-lazurite.h
+make
 echo ''
 echo ''
 echo 'STEP3: Update LazuriteJava (JAVA API for liblazurite)'
