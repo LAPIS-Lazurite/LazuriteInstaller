@@ -1,16 +1,18 @@
 /dts-v1/;
 
-#include "bcm2708.dtsi"
+#include "bcm2710.dtsi"
 
 / {
-	compatible = "brcm,bcm2708";
-	model = "Raspberry Pi Model B+";
+	compatible = "brcm,bcm2710","brcm,bcm2709";
+	model = "Raspberry Pi Compute Module 3";
 };
 
 &gpio {
-	sdhost_pins: sdhost_pins {
+
+	mmc_pins: mmc_pins {
 		brcm,pins = <48 49 50 51 52 53>;
-		brcm,function = <4>; /* alt0 */
+		brcm,function = <7>; /* alt3 */
+		brcm,pull = <0 2 2 2 2 2>;
 	};
 
 	spi0_pins: spi0_pins {
@@ -38,17 +40,35 @@
 		brcm,function = <4>; /* alt0 */
 	};
 
+	uart0_pins: uart0_pins {
+		brcm,pins;
+		brcm,function;
+		brcm,pull = <0 2>;
+	};
+
 	audio_pins: audio_pins {
-		brcm,pins = <40 45>;
-		brcm,function = <4>;
+		brcm,pins;
+		brcm,function;
 	};
 };
 
-&sdhost {
+&mmc {
 	pinctrl-names = "default";
-	pinctrl-0 = <&sdhost_pins>;
+	pinctrl-0 = <&mmc_pins>;
+	non-removable;
 	bus-width = <4>;
 	status = "okay";
+	brcm,overclock-50 = <0>;
+};
+
+&soc {
+	virtgpio: virtgpio {
+		compatible = "brcm,bcm2835-virtgpio";
+		gpio-controller;
+		#gpio-cells = <2>;
+		firmware = <&firmware>;
+		status = "okay";
+	};
 };
 
 &fb {
@@ -56,6 +76,8 @@
 };
 
 &uart0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart0_pins>;
 	status = "okay";
 };
 
@@ -65,7 +87,7 @@
 	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
 
 	spidev0: spidev@0{
-		compatible = "fadfadfa";
+		compatible = "bp3596_spi";
 		reg = <0>;	/* CE0 */
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -111,13 +133,7 @@
 	act_led: act {
 		label = "led0";
 		linux,default-trigger = "mmc0";
-		gpios = <&gpio 47 0>;
-	};
-
-	pwr_led: pwr {
-		label = "led1";
-		linux,default-trigger = "input";
-		gpios = <&gpio 35 0>;
+		gpios = <&virtgpio 0 0>;
 	};
 };
 
@@ -148,10 +164,6 @@
 		act_led_gpio = <&act_led>,"gpios:4";
 		act_led_activelow = <&act_led>,"gpios:8";
 		act_led_trigger = <&act_led>,"linux,default-trigger";
-
-		pwr_led_gpio = <&pwr_led>,"gpios:4";
-		pwr_led_activelow = <&pwr_led>,"gpios:8";
-		pwr_led_trigger = <&pwr_led>,"linux,default-trigger";
 
 		audio = <&audio>,"status";
 		watchdog = <&watchdog>,"status";

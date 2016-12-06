@@ -65,7 +65,7 @@
 	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
 
 	spidev0: spidev@0{
-		compatible = "fadfadfa";
+		compatible = "bp3596_spi";
 		reg = <0>;	/* CE0 */
 		#address-cells = <1>;
 		#size-cells = <0>;

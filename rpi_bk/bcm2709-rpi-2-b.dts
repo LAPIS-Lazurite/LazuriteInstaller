@@ -1,10 +1,10 @@
 /dts-v1/;
 
-#include "bcm2708.dtsi"
+#include "bcm2709.dtsi"
 
 / {
-	compatible = "brcm,bcm2708";
-	model = "Raspberry Pi Model B+";
+	compatible = "brcm,bcm2709";
+	model = "Raspberry Pi 2 Model B";
 };
 
 &gpio {
@@ -65,7 +65,7 @@
 	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
 
 	spidev0: spidev@0{
-		compatible = "fadfadfa";
+		compatible = "bp3596_spi";
 		reg = <0>;	/* CE0 */
 		#address-cells = <1>;
 		#size-cells = <0>;

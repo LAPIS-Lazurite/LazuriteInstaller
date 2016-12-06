@@ -1,6 +1,6 @@
 /dts-v1/;
 
-#include "bcm2708-rpi-cm.dtsi"
+#include "bcm2835-rpi-cm.dtsi"
 
 / {
 	model = "Raspberry Pi Compute Module";
@@ -12,13 +12,8 @@
 
 &gpio {
 	spi0_pins: spi0_pins {
-		brcm,pins = <9 10 11>;
+		brcm,pins = <7 8 9 10 11>;
 		brcm,function = <4>; /* alt0 */
-	};
-
-	spi0_cs_pins: spi0_cs_pins {
-		brcm,pins = <8 7>;
-		brcm,function = <1>; /* output */
 	};
 
 	i2c0_pins: i2c0 {
@@ -39,18 +34,17 @@
 
 &spi0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
-	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
+	pinctrl-0 = <&spi0_pins>;
 
-	spidev0: spidev@0{
-		compatible = "fadfadfa";
+	spidev@0{
+		compatible = "bp3596_spi";
 		reg = <0>;	/* CE0 */
 		#address-cells = <1>;
 		#size-cells = <0>;
 		spi-max-frequency = <500000>;
 	};
 
-	spidev1: spidev@1{
+	spidev@1{
 		compatible = "spidev";
 		reg = <1>;	/* CE1 */
 		#address-cells = <1>;
@@ -81,15 +75,11 @@
 	pinctrl-0 = <&i2s_pins>;
 };
 
-&random {
-	status = "okay";
-};
-
 / {
 	__overrides__ {
 		uart0 = <&uart0>,"status";
 		uart0_clkrate = <&clk_uart0>,"clock-frequency:0";
-		uart1 = <&uart1>,"status";
+		uart1_clkrate = <&uart1>,"clock-frequency:0";
 		i2s = <&i2s>,"status";
 		spi = <&spi0>,"status";
 		i2c0 = <&i2c0>,"status";
@@ -98,5 +88,6 @@
 		i2c0_baudrate = <&i2c0>,"clock-frequency:0";
 		i2c1_baudrate = <&i2c1>,"clock-frequency:0";
 		i2c2_baudrate = <&i2c2>,"clock-frequency:0";
+		core_freq = <&clk_core>,"clock-frequency:0";
 	};
 };

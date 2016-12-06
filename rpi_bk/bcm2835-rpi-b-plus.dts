@@ -1,26 +1,15 @@
 /dts-v1/;
-
-#include "bcm2708.dtsi"
+#include "bcm2835.dtsi"
 
 / {
-	compatible = "brcm,bcm2708";
+	compatible = "raspberrypi,model-b-plus", "brcm,bcm2835";
 	model = "Raspberry Pi Model B+";
 };
 
 &gpio {
-	sdhost_pins: sdhost_pins {
-		brcm,pins = <48 49 50 51 52 53>;
-		brcm,function = <4>; /* alt0 */
-	};
-
 	spi0_pins: spi0_pins {
-		brcm,pins = <9 10 11>;
+		brcm,pins = <7 8 9 10 11>;
 		brcm,function = <4>; /* alt0 */
-	};
-
-	spi0_cs_pins: spi0_cs_pins {
-		brcm,pins = <8 7>;
-		brcm,function = <1>; /* output */
 	};
 
 	i2c0_pins: i2c0 {
@@ -37,18 +26,11 @@
 		brcm,pins = <18 19 20 21>;
 		brcm,function = <4>; /* alt0 */
 	};
-
-	audio_pins: audio_pins {
-		brcm,pins = <40 45>;
-		brcm,function = <4>;
-	};
 };
 
-&sdhost {
-	pinctrl-names = "default";
-	pinctrl-0 = <&sdhost_pins>;
-	bus-width = <4>;
+&mmc {
 	status = "okay";
+	bus-width = <4>;
 };
 
 &fb {
@@ -61,18 +43,17 @@
 
 &spi0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&spi0_pins &spi0_cs_pins>;
-	cs-gpios = <&gpio 8 1>, <&gpio 7 1>;
+	pinctrl-0 = <&spi0_pins>;
 
-	spidev0: spidev@0{
-		compatible = "fadfadfa";
+	spidev@0{
+		compatible = "bp3596_spi";
 		reg = <0>;	/* CE0 */
 		#address-cells = <1>;
 		#size-cells = <0>;
 		spi-max-frequency = <500000>;
 	};
 
-	spidev1: spidev@1{
+	spidev@1{
 		compatible = "spidev";
 		reg = <1>;	/* CE1 */
 		#address-cells = <1>;
@@ -103,10 +84,6 @@
 	pinctrl-0 = <&i2s_pins>;
 };
 
-&random {
-	status = "okay";
-};
-
 &leds {
 	act_led: act {
 		label = "led0";
@@ -121,20 +98,11 @@
 	};
 };
 
-&hdmi {
-	hpd-gpios = <&gpio 46 GPIO_ACTIVE_LOW>;
-};
-
-&audio {
-	pinctrl-names = "default";
-	pinctrl-0 = <&audio_pins>;
-};
-
 / {
 	__overrides__ {
 		uart0 = <&uart0>,"status";
 		uart0_clkrate = <&clk_uart0>,"clock-frequency:0";
-		uart1 = <&uart1>,"status";
+		uart1_clkrate = <&uart1>,"clock-frequency:0";
 		i2s = <&i2s>,"status";
 		spi = <&spi0>,"status";
 		i2c0 = <&i2c0>,"status";
@@ -156,9 +124,5 @@
 		audio = <&audio>,"status";
 		watchdog = <&watchdog>,"status";
 		random = <&random>,"status";
-		sd_overclock = <&sdhost>,"brcm,overclock-50:0";
-		sd_force_pio = <&sdhost>,"brcm,force-pio?";
-		sd_pio_limit = <&sdhost>,"brcm,pio-limit:0";
-		sd_debug     = <&sdhost>,"brcm,debug";
 	};
 };
