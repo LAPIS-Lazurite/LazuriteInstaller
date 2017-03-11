@@ -1,6 +1,6 @@
 #! /bin/bash
 WORK=$(pwd)
-sudo apt-get install bc
+sudo apt-get install bc doxygen
 git clone https://github.com/notro/rpi-source
 cd rpi-source
 chmod +x rpi-source
