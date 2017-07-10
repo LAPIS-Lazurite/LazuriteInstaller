@@ -1,6 +1,6 @@
 #! /bin/bash
 WORK=$(pwd)
-sudo apt-get install bc doxygen npm node-gyp
+sudo apt-get install -y bc doxygen npm node-gyp
 git clone https://github.com/notro/rpi-source
 cd rpi-source
 chmod +x rpi-source
