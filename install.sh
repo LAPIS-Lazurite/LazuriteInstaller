@@ -25,12 +25,12 @@ echo ''
 echo ''
 echo 'STEP2: Update liblazurite(Linux dynamic link library)'
 cd ~/driver
-if [ -e 'liblzaurite' ]; then
+if [ -e 'liblazurite' ]; then
 	echo 'update liblazurite'
 	cd liblazurite
 	git pull
 else
-	echo 'Cannot find liblzaurite. Download from github'
+	echo 'Cannot find liblazurite. Download from github'
 	git clone git://github.com/LAPIS-Lazurite/liblazurite
 	cd liblazurite
 fi
