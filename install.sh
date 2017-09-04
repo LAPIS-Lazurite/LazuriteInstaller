@@ -41,7 +41,7 @@ echo ''
 echo ''
 echo 'STEP3: Update LazuriteJava (JAVA API for liblazurite)'
 cd ~/driver
-if [ -e 'LazuriteJava']; then
+if [ -e 'LazuriteJava' ]; then
 	echo 'update LazuriteJava'
 	cd LazuriteJava
 	git pull
@@ -82,7 +82,7 @@ if [ -e 'PyLaz' ]; then
 	cd LazGem
 	git pull
 else
-	echo 'Cannot find LazGem. Download from github'
+	echo 'Cannot find PyLaz. Download from github'
 	git clone git://github.com/LAPIS-Lazurite/PyLaz
 
 fi
