@@ -7,6 +7,7 @@ chmod +x rpi-source
 ./rpi-source -g --skip-gcc
 cd /home/pi/linux/arch/arm/boot/dts
 echo $WORK
+$WORK/replace_Module_symvers.rb
 $WORK/LazCnv.awk bp3596_spi
 cd /home/pi/linux
 make dtbs
