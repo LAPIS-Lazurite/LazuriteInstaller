@@ -1,8 +1,9 @@
 #! /bin/bash
 WORK=$(pwd)
 sudo apt-get install -y bc doxygen npm node-gyp
-
-if [ $# -ne 1 ]; then   # no argument 
+VER=`uname -r | sed -e 's/[+-].*//'`
+echo Kernel Version = $VER
+if [ "$VER" = "4.9.80" ]; then   # 4.9.80 only 
     cd ~/
     wget https://github.com/raspberrypi/linux/archive/rpi-4.9.y-stable.zip
     unzip rpi-4.9.y-stable.zip
@@ -28,7 +29,7 @@ sudo cp arch/arm/boot/dts/*.dtb /boot/
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
 sudo cp arch/arm/boot/dts/overlays/README /boot/overlays/
 
-if [ $# -ne 1 ]; then   # no argument 
+if [ "$VER" = "4.9.80" ]; then   # 4.9.80 only 
     cd /lib/modules/4.9.80-v7+
     sudo ln -s /home/pi/linux build
     sudo ln -s /home/pi/linux source
