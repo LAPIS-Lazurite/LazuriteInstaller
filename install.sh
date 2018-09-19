@@ -84,6 +84,7 @@ if [ -e 'PyLaz' ]; then
 else
 	echo 'Cannot find PyLaz. Download from github'
 	git clone git://github.com/LAPIS-Lazurite/PyLaz
+	sudo pip3 install PyLaz
 
 fi
 echo ''

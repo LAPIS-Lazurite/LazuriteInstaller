@@ -1,6 +1,6 @@
 #! /bin/bash
 WORK=$(pwd)
-sudo apt-get install -y bc doxygen npm node-gyp
+sudo apt-get install -y bc doxygen 
 VER=`uname -r | sed -e 's/[+-].*//'`
 echo Kernel Version = $VER
 if [ "$VER" = "4.9.80" ]; then   # 4.9.80 only 
