@@ -1,6 +1,6 @@
 #! /bin/bash
 WORK=$(pwd)
-sudo apt-get install -y bc doxygen 
+sudo apt-get install -y git bison flex libssl-dev
 VER=`uname -r | sed -e 's/[+-].*//'`
 echo Kernel Version = $VER
 if [ "$VER" = "4.9.80" ]; then   # 4.9.80 only 
