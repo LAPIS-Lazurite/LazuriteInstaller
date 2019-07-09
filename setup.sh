@@ -1,39 +1,45 @@
 #! /bin/bash
 WORK=$(pwd)
-sudo apt-get install -y git bc bison flex libssl-dev
-VER=`uname -r | sed -e 's/[+-].*//'`
+echo "*******************************************************************"
+echo "*****  Start setup Lazurite Installer                  ************"
+echo "*****    installing required software                  ************"
+echo "*******************************************************************"
+sudo apt-get install -y git bc bison flex libssl-dev doxygen ruby ruby-dev
+
+# enabling I2C & SPI
+echo "*******************************************************************"
+echo "*****    Enabling I2C and SPI                          ************"
+echo "*******************************************************************"
+sudo bash setHard.sh
+
+echo "*******************************************************************"
+echo "*****    Downloading Linux kernel source               ************"
+echo "*******************************************************************"
 echo Kernel Version = $VER
-if [ "$VER" = "4.9.80" ]; then   # 4.9.80 only 
-    cd ~/
-    wget https://github.com/raspberrypi/linux/archive/rpi-4.9.y-stable.zip
-    unzip rpi-4.9.y-stable.zip
-    ln -s linux-rpi-4.9.y-stable linux
-    $WORK/replace_Module_symvers.rb
-    cd ~/linux
-    KERNEL=kernel7
-    make bcm2709_defconfig
-else
     git clone https://github.com/notro/rpi-source
     cd rpi-source
     chmod +x rpi-source
     ./rpi-source -g --skip-gcc
-fi
 
 cd /home/pi/linux/arch/arm/boot/dts
+echo "*******************************************************************"
+echo "*****    Change device-tree-file                       ************"
+echo "*******************************************************************"
 echo $WORK
-$WORK/replace_Module_symvers.rb
 $WORK/LazCnv.awk bp3596_spi
 cd /home/pi/linux
+echo "*******************************************************************"
+echo "*****    Building device tree file                     ************"
+echo "*******************************************************************"
 make dtbs
 sudo cp arch/arm/boot/dts/*.dtb /boot/
 sudo cp arch/arm/boot/dts/overlays/*.dtb* /boot/overlays/
 sudo cp arch/arm/boot/dts/overlays/README /boot/overlays/
 
-if [ "$VER" = "4.9.80" ]; then   # 4.9.80 only 
-    cd /lib/modules/4.9.80-v7+
-    sudo ln -s /home/pi/linux build
-    sudo ln -s /home/pi/linux source
-fi
+echo "*******************************************************************"
+echo "***** End of setup.  Please reboot Raspberry Pi.       ************"
+echo "***** Then please execute install.sh                   ************"
+echo "*******************************************************************"
 #sudo reboot
 
 

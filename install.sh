@@ -40,22 +40,26 @@ make
 echo ''
 echo ''
 echo 'STEP3: Update LazuriteJava (JAVA API for liblazurite)'
-cd ~/driver
-if [ -e 'LazuriteJava' ]; then
-	echo 'update LazuriteJava'
-	cd LazuriteJava
-	git pull
-else
-	echo 'Cannot find LazuriteJava. Download from github'
-	git clone git://github.com/LAPIS-Lazurite/LazuriteJava
-	cd LazuriteJava
-fi
+echo '######################################################'
+echo '######              CAUTION !!                   #####'
+echo '######      QUIT to support JAVA Library         #####'
+echo '######################################################'
+#cd ~/driver
+#if [ -e 'LazuriteJava' ]; then
+#	echo 'update LazuriteJava'
+#	cd LazuriteJava
+#	git pull
+##else
+#	echo 'Cannot find LazuriteJava. Download from github'
+#	git clone git://github.com/LAPIS-Lazurite/LazuriteJava
+#	cd LazuriteJava
+#fi
 
-wget https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/jna-4.2.2.jar
-wget central.maven.org/maven2/com/nativelibs4java/jnaerator-runtime/0.12/jnaerator-runtime-0.12.jar
-sudo cp jnaerator-runtime-0.12.jar jna-4.2.2.jar /usr/lib/jvm/jdk-8-oracle-arm32-vfp-hflt/jre/lib/ext
-make
-make install
+#wget https://maven.java.net/content/repositories/releases/net/java/dev/jna/jna/4.2.2/jna-4.2.2.jar
+#wget central.maven.org/maven2/com/nativelibs4java/jnaerator-runtime/0.12/jnaerator-runtime-0.12.jar
+#sudo cp jnaerator-runtime-0.12.jar jna-4.2.2.jar /usr/lib/jvm/jdk-8-oracle-arm32-vfp-hflt/jre/lib/ext
+#make
+#make install
 
 echo ''
 echo ''
