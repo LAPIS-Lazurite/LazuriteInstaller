@@ -17,7 +17,7 @@ if [ -e 'LazDriver' ]; then
 	make
 else
 	echo 'Cannot find LazDriver. Download from github'
-	git clone git://github.com/LAPIS-Lazurite/LazDriver
+	git clone https://github.com/LAPIS-Lazurite/LazDriver
 	cd LazDriver
 	make
 fi
@@ -31,7 +31,7 @@ if [ -e 'liblazurite' ]; then
 	git pull
 else
 	echo 'Cannot find liblazurite. Download from github'
-	git clone git://github.com/LAPIS-Lazurite/liblazurite
+	git clone https://github.com/LAPIS-Lazurite/liblazurite
 	cd liblazurite
 fi
 rm lib/drv-lazurite.h
@@ -51,7 +51,7 @@ echo '######################################################'
 #	git pull
 ##else
 #	echo 'Cannot find LazuriteJava. Download from github'
-#	git clone git://github.com/LAPIS-Lazurite/LazuriteJava
+#	git clone https://github.com/LAPIS-Lazurite/LazuriteJava
 #	cd LazuriteJava
 #fi
 
@@ -72,7 +72,7 @@ if [ -e 'LazGem' ]; then
 	sudo gem install LazGem
 else
 	echo 'Cannot find LazGem. Download from github'
-	git clone git://github.com/LAPIS-Lazurite/LazGem
+	git clone https://github.com/LAPIS-Lazurite/LazGem
 	sudo gem install LazGem
 
 fi
@@ -87,7 +87,7 @@ if [ -e 'PyLaz' ]; then
 	git pull
 else
 	echo 'Cannot find PyLaz. Download from github'
-	git clone git://github.com/LAPIS-Lazurite/PyLaz
+	git clone https://github.com/LAPIS-Lazurite/PyLaz
 	sudo pip3 install PyLaz
 
 fi
